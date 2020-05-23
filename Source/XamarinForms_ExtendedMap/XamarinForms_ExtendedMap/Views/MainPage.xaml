@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="XamarinForms_ExtendedMap.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Controls="clr-namespace:XamarinForms_ExtendedMap.Controls"
+    xmlns:Models="clr-namespace:XamarinForms_ExtendedMap.Models"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <ContentPage.Resources>
+
+        <Style x:Key="ExtendedMapStyle" TargetType="Controls:ExtendedMap">
+            <Setter Property="HeightRequest" Value="400" />
+            <Setter Property="IsShowingUser" Value="True" />
+            <Setter Property="MapType" Value="Hybrid" />
+        </Style>
+
+    </ContentPage.Resources>
+
+    <Grid VerticalOptions="CenterAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackLayout
+            Grid.Row="0"
+            HorizontalOptions="CenterAndExpand"
+            Orientation="Horizontal">
+            <Entry
+                HorizontalTextAlignment="Center"
+                Text="{Binding Path=ZoomDistance, Mode=TwoWay}"
+                WidthRequest="100" />
+            <Button
+                BorderWidth="1"
+                Command="{Binding Path=ZoomCommand}"
+                Text="Zoom"
+                WidthRequest="100" />
+        </StackLayout>
+        <Controls:ExtendedMap
+            x:Name="LocalMap"
+            Grid.Row="1"
+            CenterPosition="{Binding Path=MapCenterPosition}"
+            Distance="{Binding Path=MapDistance, Mode=TwoWay}"
+            ItemsSource="{Binding Path=MapLocations}"
+            Style="{StaticResource ExtendedMapStyle}">
+            <Controls:ExtendedMap.ItemTemplate>
+                <DataTemplate x:DataType="Models:Location">
+                    <maps:Pin
+                        Address="{Binding Path=Description}"
+                        Label="{Binding Path=Label}"
+                        Position="{Binding Path=Position}"
+                        Type="Place" />
+                </DataTemplate>
+            </Controls:ExtendedMap.ItemTemplate>
+        </Controls:ExtendedMap>
+    </Grid>
+
+</ContentPage>
