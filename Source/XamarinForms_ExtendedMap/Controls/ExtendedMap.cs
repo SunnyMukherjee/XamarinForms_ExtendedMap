@@ -128,7 +128,7 @@ namespace XamarinForms_ExtendedMap.Controls
 
         public ExtendedMap(MapSpan region) : base(region)
         {
-
+            MapSpan = region;
         }
 
         #endregion
